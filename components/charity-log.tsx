@@ -171,7 +171,7 @@ export function CharityLog({
       {charityTransactions.length > 0 && (
         <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-red-100 to-pink-100">
           <p className="text-sm text-gray-700 text-center">
-            ✨ You've made {charityTransactions.length} donation{charityTransactions.length !== 1 ? 's' : ''} totaling ${totalDonated.toFixed(2)}! Keep up the generous spirit!
+            ✨ You&apos;ve made {charityTransactions.length} donation{charityTransactions.length !== 1 ? 's' : ''} totaling ${totalDonated.toFixed(2)}! Keep up the generous spirit!
           </p>
         </div>
       )}

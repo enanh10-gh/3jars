@@ -47,7 +47,7 @@ export default function Dashboard() {
     id: t.id,
     jarType: t.jar_type,
     amount: t.amount,
-    type: t.type === 'deposit' ? 'add' : t.type === 'withdrawal' ? 'spend' : 'interest',
+    type: (t.type === 'deposit' ? 'add' : t.type === 'withdrawal' ? 'spend' : 'interest') as 'add' | 'spend' | 'interest',
     note: t.note || '',
     timestamp: new Date(t.created_at)
   }))
