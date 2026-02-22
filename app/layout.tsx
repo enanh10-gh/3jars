@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ProfileProvider } from '@/context/profile-context'
+import { AuthWrapper } from '@/components/auth-wrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ProfileProvider>
-          {children}
-        </ProfileProvider>
+        <AuthWrapper>
+          <ProfileProvider>
+            {children}
+          </ProfileProvider>
+        </AuthWrapper>
       </body>
     </html>
   )

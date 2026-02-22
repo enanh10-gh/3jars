@@ -6,7 +6,7 @@ import { ProfileCard } from '@/components/profile-card'
 import { useProfile } from '@/context/profile-context'
 import { useProfiles } from '@/hooks/useProfile'
 import { Profile } from '@/lib/supabase/types'
-import { Coins, Plus, Loader2 } from 'lucide-react'
+import { Coins, Plus, Loader2, LogOut } from 'lucide-react'
 
 export default function ProfileSelection() {
   const router = useRouter()
@@ -20,6 +20,12 @@ export default function ProfileSelection() {
   const handleProfileSelect = (profile: Profile) => {
     setCurrentProfile(profile)
     router.push('/dashboard')
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('app_authenticated')
+    localStorage.removeItem('app_auth_time')
+    window.location.reload()
   }
 
   if (isLoading) {
@@ -48,6 +54,16 @@ export default function ProfileSelection() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-300 to-yellow-300">
       <div className="container mx-auto px-4 py-12">
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 rounded-full bg-red-500/90 px-4 py-2 font-semibold text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:shadow-xl hover:scale-105"
+            title="Logout"
+          >
+            <LogOut size={18} />
+            <span>Logout</span>
+          </button>
+        </div>
         <div className="mb-12 text-center">
           <div className="flex items-center justify-center mb-4">
             <Coins className="h-16 w-16 text-yellow-500 animate-bounce" />

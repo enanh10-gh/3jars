@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useProfile } from '@/context/profile-context'
-import { ArrowLeft, User, Plus, Minus, Sparkles, TrendingUp, Settings, History, Heart, Loader2 } from 'lucide-react'
+import { ArrowLeft, User, Plus, Minus, Sparkles, TrendingUp, Settings, History, Heart, Loader2, LogOut } from 'lucide-react'
 import { Jar } from '@/components/ui/jar'
 import { JarType } from '@/lib/supabase/types'
 import { TransactionModal, TransactionInput } from '@/components/transaction-modal'
@@ -116,6 +116,12 @@ export default function Dashboard() {
     await Promise.all([refetchJars(), refetchTransactions()])
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('app_authenticated')
+    localStorage.removeItem('app_auth_time')
+    window.location.reload()
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100">
@@ -145,24 +151,34 @@ export default function Dashboard() {
             Back to Profiles
           </button>
 
-          <div className="flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 shadow-lg backdrop-blur-sm">
-            <div 
-              className="h-12 w-12 rounded-full flex items-center justify-center text-white shadow-md"
-              style={{ backgroundColor: currentProfile.avatar_color }}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 shadow-lg backdrop-blur-sm">
+              <div 
+                className="h-12 w-12 rounded-full flex items-center justify-center text-white shadow-md"
+                style={{ backgroundColor: currentProfile.avatar_color }}
+              >
+                <User size={28} />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-gray-800">
+                  {currentProfile.name}
+                </h2>
+                {currentProfile.age && (
+                  <p className="text-sm text-gray-600">
+                    Age {currentProfile.age}
+                  </p>
+                )}
+              </div>
+              <Sparkles className="h-6 w-6 text-yellow-500 animate-pulse ml-2" />
+            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 rounded-full bg-red-500/90 px-4 py-3 font-semibold text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:shadow-xl hover:scale-105"
+              title="Logout"
             >
-              <User size={28} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-gray-800">
-                {currentProfile.name}
-              </h2>
-              {currentProfile.age && (
-                <p className="text-sm text-gray-600">
-                  Age {currentProfile.age}
-                </p>
-              )}
-            </div>
-            <Sparkles className="h-6 w-6 text-yellow-500 animate-pulse ml-2" />
+              <LogOut size={20} />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
           </div>
         </div>
 
