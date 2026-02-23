@@ -18,18 +18,15 @@ export function PasswordGuard({
   const [error, setError] = useState('')
   
   const PARENT_PASSWORD = process.env.NEXT_PUBLIC_PARENT_PASSWORD || '195811'
-  
-  // Debug logging
-  console.log('Parent password from env:', process.env.NEXT_PUBLIC_PARENT_PASSWORD)
-  console.log('Using parent password:', PARENT_PASSWORD)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Entered password:', password)
-    console.log('Expected password:', PARENT_PASSWORD)
-    console.log('Passwords match?', password === PARENT_PASSWORD)
     
-    if (password === PARENT_PASSWORD) {
+    // Trim both passwords to handle any whitespace issues
+    const trimmedPassword = password.trim()
+    const trimmedExpected = PARENT_PASSWORD.trim()
+    
+    if (trimmedPassword === trimmedExpected) {
       setPassword('')
       setError('')
       onVerified()

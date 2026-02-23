@@ -30,17 +30,13 @@ export function ParentTools({ isOpen, onClose, profiles, onProcessInterest }: Pa
 
   // Simple password check (in production, this should be more secure)
    const PARENT_PASSWORD = process.env.NEXT_PUBLIC_PARENT_PASSWORD || '195811' // Change this to your desired password
-   
-  // Debug logging
-  console.log('ParentTools - Password from env:', process.env.NEXT_PUBLIC_PARENT_PASSWORD)
-  console.log('ParentTools - Using password:', PARENT_PASSWORD)
 
   const handleUnlock = () => {
-    console.log('ParentTools - Entered password:', password)
-    console.log('ParentTools - Expected password:', PARENT_PASSWORD)
-    console.log('ParentTools - Passwords match?', password === PARENT_PASSWORD)
+    // Trim both passwords to handle any whitespace issues
+    const trimmedPassword = password.trim()
+    const trimmedExpected = PARENT_PASSWORD.trim()
     
-    if (password === PARENT_PASSWORD) {
+    if (trimmedPassword === trimmedExpected) {
       setIsUnlocked(true)
       setError('')
       setPassword('')
